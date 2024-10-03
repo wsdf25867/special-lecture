@@ -2,6 +2,8 @@ package io.clean.special_lecture.domain.special_lecture.fake
 
 import io.clean.special_lecture.domain.special_lecture.SpecialLecture
 import io.clean.special_lecture.domain.special_lecture.SpecialLectureRepository
+import io.clean.special_lecture.support.time.isAfterOrEqual
+import io.clean.special_lecture.support.time.isBeforeOrEqual
 import java.time.LocalDateTime
 
 class FakeSpecialLectureRepository : SpecialLectureRepository {
@@ -28,4 +30,10 @@ class FakeSpecialLectureRepository : SpecialLectureRepository {
             lectures[sequence++] = this
         }
     }
+
+    override fun findLecturesByDateBetween(date: LocalDateTime): List<SpecialLecture> =
+        lectures.values.filter {
+            date.isAfterOrEqual(it.enrollStartDateTime) &&
+                    date.isBeforeOrEqual(it.enrollEndDateTime)
+        }
 }
