@@ -76,4 +76,56 @@ class SpecialLectureControllerTest {
             jsonPath("$.size()") { value(0) }
         }
     }
+
+    @Test
+    fun `user 가 신청한 특강을 반환`() {
+        // given
+        val specialLectures = listOf(
+            SpecialLectureServiceResponse(
+                id = 1L,
+                title = "특강1",
+                capacity = 30,
+                enrollStartDateTime = DEFAULT_START_DATE_TIME,
+                enrollEndDateTime = DEFAULT_END_DATE_TIME,
+                lecturers = listOf()
+            ),
+            SpecialLectureServiceResponse(
+                id = 2L,
+                title = "특강2",
+                capacity = 10,
+                enrollStartDateTime = DEFAULT_START_DATE_TIME,
+                enrollEndDateTime = DEFAULT_END_DATE_TIME,
+                lecturers = listOf()
+            ),
+        )
+
+        // when
+        `when`(specialLectureService.findAllEnrolledByUserId(1)).thenReturn(specialLectures)
+
+        // then
+        mockMvc.get("/api/special-lectures") {
+            param("userId", "1")
+        }.andExpect {
+            status { isOk() }
+            jsonPath("$.size()") { value(2) }
+            jsonPath("$[0].title") { value("특강1") }
+            jsonPath("$[1].title") { value("특강2") }
+        }
+    }
+
+    @Test
+    fun `user가 신청한 특강이 없을시 빈리스트 반환`() {
+        // given
+
+        // when
+        `when`(specialLectureService.findAllEnrolledByUserId(1)).thenReturn(emptyList())
+
+        // then
+        mockMvc.get("/api/special-lectures") {
+            param("userId", "1")
+        }.andExpect {
+            status { isOk() }
+            jsonPath("$.size()") { value(0) }
+        }
+    }
 }
