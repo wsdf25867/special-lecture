@@ -1,5 +1,7 @@
 package io.clean.special_lecture.domain.special_lecture
 
+import io.clean.special_lecture.support.time.isAfterOrEqual
+import io.clean.special_lecture.support.time.isBeforeOrEqual
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -32,10 +34,4 @@ class SpecialLecture(
     fun addLecturer(userId: Long) {
         _lecturers.add(Lecturer(userId, this))
     }
-
-    private fun LocalDateTime.isAfterOrEqual(other: LocalDateTime): Boolean =
-        this.isAfter(other) || this.isEqual(other)
-
-    private fun LocalDateTime.isBeforeOrEqual(other: LocalDateTime): Boolean =
-        this.isBefore(other) || this.isEqual(other)
 }
