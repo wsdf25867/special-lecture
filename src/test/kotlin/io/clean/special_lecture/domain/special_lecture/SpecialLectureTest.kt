@@ -1,5 +1,6 @@
 package io.clean.special_lecture.domain.special_lecture
 
+import io.clean.special_lecture.domain.user.User
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalStateException
 import org.junit.jupiter.api.Test
@@ -64,7 +65,7 @@ class SpecialLectureTest {
         val endAt = startAt.plusDays(1)
         val specialLecture = SpecialLecture(title, startAt, endAt)
         // when
-        specialLecture.addLecturer( 1)
+        specialLecture.addLecturer(User("name"))
 
         // then
         assertThat(specialLecture.lecturers).hasSize(1)

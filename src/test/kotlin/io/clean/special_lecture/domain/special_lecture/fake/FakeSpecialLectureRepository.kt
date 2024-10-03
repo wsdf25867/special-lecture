@@ -21,7 +21,7 @@ class FakeSpecialLectureRepository : SpecialLectureRepository {
             id = sequence,
         ).apply {
             lecture.lecturers.forEach {
-                this.addLecturer(it.userId)
+                this.addLecturer(it.user)
             }
             lecture.students.forEach {
                 this.enroll(it.userId, LocalDateTime.now())

@@ -1,5 +1,6 @@
 package io.clean.special_lecture.domain.special_lecture
 
+import io.clean.special_lecture.domain.user.User
 import io.clean.special_lecture.support.time.isAfterOrEqual
 import io.clean.special_lecture.support.time.isBeforeOrEqual
 import jakarta.persistence.*
@@ -31,7 +32,7 @@ class SpecialLecture(
         _students.add(Student(userId, this))
     }
 
-    fun addLecturer(userId: Long) {
-        _lecturers.add(Lecturer(userId, this))
+    fun addLecturer(user: User) {
+        _lecturers.add(Lecturer(user, this))
     }
 }
