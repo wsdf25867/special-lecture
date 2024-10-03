@@ -9,6 +9,6 @@ class Lecturer(
     @ManyToOne(fetch = LAZY)
     val specialLecture: SpecialLecture,
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 )

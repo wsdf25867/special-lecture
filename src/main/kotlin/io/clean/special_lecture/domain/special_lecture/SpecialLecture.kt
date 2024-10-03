@@ -11,7 +11,7 @@ class SpecialLecture(
     val enrollStartDateTime: LocalDateTime,
     val enrollEndDateTime: LocalDateTime,
     val capacity: Int = 30,
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 ) {
     @OneToMany(fetch = FetchType.LAZY, cascade = [(CascadeType.ALL)], mappedBy = "specialLecture")
