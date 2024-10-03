@@ -31,7 +31,7 @@ class FakeSpecialLectureRepository : SpecialLectureRepository {
         }
     }
 
-    override fun findLecturesByDateBetween(date: LocalDateTime): List<SpecialLecture> =
+    override fun findAllAbleToEnrollByDate(date: LocalDateTime): List<SpecialLecture> =
         lectures.values.filter {
             date.isAfterOrEqual(it.enrollStartDateTime) &&
                     date.isBeforeOrEqual(it.enrollEndDateTime)

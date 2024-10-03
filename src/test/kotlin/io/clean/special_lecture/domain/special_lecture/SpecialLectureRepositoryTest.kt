@@ -39,7 +39,7 @@ class SpecialLectureRepositoryTest {
     fun `날짜에 따라 수강 가능한 특강을 조회시 없다면 빈 리스트반환`() {
         // given
         // when
-        val found = specialLectureRepository.findLecturesByDateBetween(LocalDateTime.now())
+        val found = specialLectureRepository.findAllAbleToEnrollByDate(LocalDateTime.now())
 
         // then
         assertThat(found).isEmpty()
@@ -53,7 +53,7 @@ class SpecialLectureRepositoryTest {
         specialLectureRepository.save(specialLecture)
 
         // when
-        val found = specialLectureRepository.findLecturesByDateBetween(DEFAULT_START_DATE_TIME)
+        val found = specialLectureRepository.findAllAbleToEnrollByDate(DEFAULT_START_DATE_TIME)
 
         // then
         assertThat(found).hasSize(1)

@@ -7,5 +7,5 @@ interface SpecialLectureRepository {
 
     fun save(lecture: SpecialLecture): SpecialLecture
 
-    fun findLecturesByDateBetween(date: LocalDateTime): List<SpecialLecture>
+    fun findAllAbleToEnrollByDate(date: LocalDateTime): List<SpecialLecture>
 }
