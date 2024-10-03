@@ -15,7 +15,7 @@ class SpecialLectureTest {
 
         // when // then
         assertThatIllegalStateException().isThrownBy {
-            specialLecture.enroll(Student(1, 1), now)
+            specialLecture.enroll(1, now)
         }.withMessageContaining("수강신청이 시작되지 않았습니다.")
     }
 
@@ -27,7 +27,7 @@ class SpecialLectureTest {
 
         // when // then
         assertThatIllegalStateException().isThrownBy {
-            specialLecture.enroll(Student(1, 1), now)
+            specialLecture.enroll(1, now)
         }.withMessageContaining("수강신청이 종료되었습니다.")
     }
 
@@ -39,7 +39,7 @@ class SpecialLectureTest {
 
         // when // then
         assertThatIllegalStateException().isThrownBy {
-            specialLecture.enroll(Student(1, 1), now)
+            specialLecture.enroll(1, now)
         }.withMessageContaining("수강인원이 다 찼습니다.")
     }
 
@@ -50,7 +50,7 @@ class SpecialLectureTest {
         val specialLecture = createLecture()
 
         // when
-        specialLecture.enroll(Student(1, 1), now)
+        specialLecture.enroll(1, now)
 
         // then
         assertThat(specialLecture.students).hasSize(1)
@@ -64,7 +64,7 @@ class SpecialLectureTest {
         val endAt = startAt.plusDays(1)
         val specialLecture = SpecialLecture(title, startAt, endAt)
         // when
-        specialLecture.addLecturer(Lecturer(1, 1, 1))
+        specialLecture.addLecturer( 1)
 
         // then
         assertThat(specialLecture.lecturers).hasSize(1)
