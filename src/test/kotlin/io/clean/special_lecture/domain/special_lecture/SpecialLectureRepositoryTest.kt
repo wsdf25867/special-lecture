@@ -58,4 +58,31 @@ class SpecialLectureRepositoryTest {
         // then
         assertThat(found).hasSize(1)
     }
+
+    @Test
+    fun `유저 id에 따라 신청한 특강목록을 조회시 없다면 빈리스트`() {
+        // given
+        val specialLecture = createLecture()
+        specialLectureRepository.save(specialLecture)
+
+        // when
+        val found = specialLectureRepository.findAllEnrolledByUserId(1)
+
+        // then
+        assertThat(found).isEmpty()
+    }
+
+    @Test
+    fun `유저 id에 따라 신청한 특강목록을 조회할 수 있다`() {
+        // given
+        val specialLecture = createLecture()
+        specialLecture.enroll(1, DEFAULT_START_DATE_TIME.plusNanos(1))
+        specialLectureRepository.save(specialLecture)
+
+        // when
+        val found = specialLectureRepository.findAllEnrolledByUserId(1)
+
+        // then
+        assertThat(found).hasSize(1)
+    }
 }

@@ -18,15 +18,10 @@ class FakeSpecialLectureRepository : SpecialLectureRepository {
             enrollStartDateTime = lecture.enrollStartDateTime,
             enrollEndDateTime = lecture.enrollEndDateTime,
             capacity = lecture.capacity,
+            _students = lecture.students.toMutableSet(),
+            _lecturers = lecture.lecturers.toMutableSet(),
             id = sequence,
         ).apply {
-            lecture.lecturers.forEach {
-                this.addLecturer(it.user)
-            }
-            lecture.students.forEach {
-                this.enroll(it.userId, LocalDateTime.now())
-            }
-        }.apply {
             lectures[sequence++] = this
         }
     }
@@ -35,5 +30,10 @@ class FakeSpecialLectureRepository : SpecialLectureRepository {
         lectures.values.filter {
             date.isAfterOrEqual(it.enrollStartDateTime) &&
                     date.isBeforeOrEqual(it.enrollEndDateTime)
+        }
+
+    override fun findAllEnrolledByUserId(userId: Long): List<SpecialLecture> =
+        lectures.values.filter { it ->
+            it.students.any { it.userId == userId }
         }
 }

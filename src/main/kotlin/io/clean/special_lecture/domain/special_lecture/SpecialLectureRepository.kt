@@ -8,4 +8,6 @@ interface SpecialLectureRepository {
     fun save(lecture: SpecialLecture): SpecialLecture
 
     fun findAllAbleToEnrollByDate(date: LocalDateTime): List<SpecialLecture>
+
+    fun findAllEnrolledByUserId(userId: Long): List<SpecialLecture>
 }
