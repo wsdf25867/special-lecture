@@ -29,6 +29,7 @@ class SpecialLecture(
         check(enrollDateTime.isAfterOrEqual(enrollStartDateTime)) { "수강신청이 시작되지 않았습니다." }
         check(enrollDateTime.isBeforeOrEqual(enrollEndDateTime)) { "수강신청이 종료되었습니다." }
         check(students.size < capacity) { "수강인원이 다 찼습니다." }
+        check(students.none { it.userId == userId }) { "한번만 수강 신청이 가능합니다." }
         _students.add(Student(userId, this))
     }
 
