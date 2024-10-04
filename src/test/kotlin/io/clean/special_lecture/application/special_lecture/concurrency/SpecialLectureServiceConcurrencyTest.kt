@@ -9,7 +9,6 @@ import io.clean.special_lecture.infrastructure.user.JpaUserRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
@@ -36,7 +35,7 @@ class SpecialLectureServiceConcurrencyTest {
             enrollEndDateTime = LocalDateTime.now().plusDays(1),
             capacity = 30
         )
-        val saved = repository.save(specialLecture)
+        repository.save(specialLecture)
 
         val totalApplicants = 40
         val threadPool = Executors.newFixedThreadPool(totalApplicants)
