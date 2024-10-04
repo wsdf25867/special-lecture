@@ -10,4 +10,6 @@ interface SpecialLectureRepository {
     fun findAllAbleToEnrollByDate(date: LocalDateTime): List<SpecialLecture>
 
     fun findAllEnrolledByUserId(userId: Long): List<SpecialLecture>
+
+    fun findByIdWithLock(id: Long): SpecialLecture?
 }

@@ -17,7 +17,7 @@ class SpecialLectureService(
 
     fun enroll(request: SpecialLectureServiceEnrollRequest) {
         val specialLecture =
-            requireNotNull(specialLectureRepository.findById(request.specialLectureId)) { "special lecture not found" }
+            requireNotNull(specialLectureRepository.findByIdWithLock(request.specialLectureId)) { "special lecture not found" }
         val user = requireNotNull(userRepository.findById(request.userId)) { "user not found" }
 
         specialLecture.enroll(user.id, request.enrollDateTime)

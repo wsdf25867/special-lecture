@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 
 class FakeSpecialLectureRepository : SpecialLectureRepository {
     private val lectures: MutableMap<Long, SpecialLecture> = mutableMapOf()
+    private val lock = Object()
     private var sequence: Long = 1
 
     override fun findById(id: Long): SpecialLecture? = lectures[id]
@@ -35,5 +36,10 @@ class FakeSpecialLectureRepository : SpecialLectureRepository {
     override fun findAllEnrolledByUserId(userId: Long): List<SpecialLecture> =
         lectures.values.filter { it ->
             it.students.any { it.userId == userId }
+        }
+
+    override fun findByIdWithLock(id: Long): SpecialLecture? =
+        synchronized(lock) {
+            findById(id)
         }
 }
