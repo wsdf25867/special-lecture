@@ -3,15 +3,13 @@ package io.clean.special_lecture.application.special_lecture.concurrency
 import io.clean.special_lecture.application.special_lecture.SpecialLectureService
 import io.clean.special_lecture.application.special_lecture.request.SpecialLectureServiceEnrollRequest
 import io.clean.special_lecture.domain.special_lecture.SpecialLecture
-import io.clean.special_lecture.domain.special_lecture.SpecialLectureRepository
 import io.clean.special_lecture.domain.user.User
-import io.clean.special_lecture.domain.user.UserRepository
 import io.clean.special_lecture.infrastructure.special_lecture.JpaSpecialLectureRepository
 import io.clean.special_lecture.infrastructure.user.JpaUserRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
@@ -28,12 +26,6 @@ class SpecialLectureServiceConcurrencyTest {
 
     @Autowired
     private lateinit var userRepository: JpaUserRepository
-
-    @AfterEach
-    fun tearDown() {
-        repository.deleteAllInBatch()
-        userRepository.deleteAllInBatch()
-    }
 
     @Test
     fun `동시에 40명이 특강 신청, 30명만 성공`() {
@@ -59,7 +51,7 @@ class SpecialLectureServiceConcurrencyTest {
         for (i in 1..totalApplicants) {
             threadPool.execute {
                 try {
-                    service.enroll(SpecialLectureServiceEnrollRequest(saved.id, i.toLong(), LocalDateTime.now()))
+                    service.enroll(SpecialLectureServiceEnrollRequest(1, i.toLong(), LocalDateTime.now()))
                     synchronized(results) { results.add(true) } // 신청 성공
                 } catch (e: Exception) {
                     println("error!!: $e.message")
