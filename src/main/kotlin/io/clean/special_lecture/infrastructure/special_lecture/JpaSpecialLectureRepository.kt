@@ -33,8 +33,7 @@ interface JpaSpecialLectureRepository : SpecialLectureRepository, JpaRepository<
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(
         "select s from SpecialLecture s " +
-                "join fetch s._students ss " +
-                "where ss.specialLecture.id = :id"
+                "where s.id = :id"
     )
     override fun findByIdWithLock(id: Long): SpecialLecture?
 }
