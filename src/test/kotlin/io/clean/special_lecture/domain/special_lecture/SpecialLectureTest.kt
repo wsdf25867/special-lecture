@@ -70,4 +70,17 @@ class SpecialLectureTest {
         // then
         assertThat(specialLecture.lecturers).hasSize(1)
     }
+
+    @Test
+    fun `수강 신청한 강의를 다시 신청하면 IllegalStateException이 발생한다`() {
+        // given
+        val lecture = createLecture()
+        lecture.enroll(1, DEFAULT_START_DATE_TIME)
+
+        // when
+        // then
+        assertThatIllegalStateException().isThrownBy {
+            lecture.enroll(1, DEFAULT_END_DATE_TIME)
+        }
+    }
 }
